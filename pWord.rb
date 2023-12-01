@@ -7,8 +7,5 @@ end
 password = generate_password
 puts "generated password: #{password}"
 
-# write password to file
-File.open('password.txt', 'w') { |f| f.puts(password) }
-
-# run john the ripper on password file
-system("john --format=Raw-MD5 --test password.txt")
+# run john the ripper directly on password
+IO.popen("john --stdin --format=Raw-MD5 --test", "w") { |f| f.puts(password) }
