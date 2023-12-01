@@ -1,3 +1,4 @@
+require 'zxcvbn'
 require 'securerandom'
 
 def generate_password(length = 12)
@@ -7,5 +8,5 @@ end
 password = generate_password
 puts "generated password: #{password}"
 
-# run john the ripper directly on password
-IO.popen("john --stdin --format=Raw-MD5 --test", "w") { |f| f.puts(password) }
+strength = Zxcvbn.test(password)
+puts "password strength: #{strength.score}"
